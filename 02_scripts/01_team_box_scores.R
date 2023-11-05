@@ -96,10 +96,4 @@ nba <- nba %>%
 
 
 
-# Explore strongest predictors of win loss 
-# and point differential at the team level
-
-
-
-
 
