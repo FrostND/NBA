@@ -1,4 +1,5 @@
 
+
 # 📝 Description #### 
 # Organize team box scores into a single data frame. 
 # Seasons: 2018-19, 2019-20, 2020-21, 2021-22, 2022-23
@@ -10,9 +11,9 @@ library(hoopR)     # NBA Play by Play Data
 library(tidyverse) # Load the 'Tidyverse'
 library(janitor)   # Examining and Cleaning Data
 library(todor)     # Comments and More
-library(ARTofR)    # Insert Title, Divider, and Comments
 
 # 📂 NBA seasons ####    
+
 box_18 <- load_nba_team_box(2018)
 box_19 <- load_nba_team_box(2019)
 box_20 <- load_nba_team_box(2020)
@@ -95,10 +96,6 @@ nba <- nba %>%
     ))
   )
 
-
-
-# Explore strongest predictors of win loss 
-# and point differential at the team level
 
 
 
