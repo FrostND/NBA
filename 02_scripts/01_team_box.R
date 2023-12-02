@@ -46,7 +46,7 @@ years <- bind_rows(nested_data_frames)
 
 # clear 
 rm(
-  box_18, box_19, box_20, box_21, box_22,
+  box_18, box_19, box_20, box_21, box_22, box_23,
   nest_fun, nested_data_frames, data_frames
 )
 
@@ -82,7 +82,7 @@ rm(rm_team, years)
 names(nba$data[[1]])
 
 # remove variables from from nested columns
-nba <- nba %>%
+team_box <- nba %>%
   mutate(
     data = map(data, select, -c(
       team_color, team_logo, opponent_team_location, 
