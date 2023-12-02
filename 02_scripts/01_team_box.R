@@ -1,18 +1,16 @@
 
-# 📝 Description #### 
+
 # Organize team box scores into a single data frame. 
 # Seasons: 2018-19, 2019-20, 2020-21, 2021-22, 2022-23
 
-
-
-# 📦 Packages ####
+# Packages ####
 library(hoopR)     # NBA Play by Play Data
 library(tidyverse) # Load the 'Tidyverse'
 library(janitor)   # Examining and Cleaning Data
 library(todor)     # Comments and More
-library(ARTofR)    # Insert Title, Divider, and Comments
 
-# 📂 NBA seasons ####    
+
+# NBA seasons ####    
 box_18 <- load_nba_team_box(2018)
 box_19 <- load_nba_team_box(2019)
 box_20 <- load_nba_team_box(2020)
@@ -21,8 +19,7 @@ box_22 <- load_nba_team_box(2022)
 box_23 <- load_nba_team_box(2023)
 
 
-# need seasons in single object to 
-# apply functions across them at once
+# seasons in single object to apply functions across them at once
 nest_fun <- function(df, team_ID, season, year) {
   df %>%
     group_by({{ team_ID }}, {{ season }}, {{ year }}) %>%
@@ -58,7 +55,7 @@ rm(
 # TODO: remove all-star games, and others
 #........................................
 
-# which are the all-star games?
+# which ones are the all-star games?
 tabyl(years$team_name)
 
 rm_team <- c(
@@ -95,10 +92,6 @@ nba <- nba %>%
     ))
   )
 
-
-
-# Explore strongest predictors of win loss 
-# and point differential at the team level
 
 
 
