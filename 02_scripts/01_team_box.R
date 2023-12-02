@@ -3,7 +3,7 @@
 # Organize team box scores into a single data frame. 
 # Seasons: 2018-19, 2019-20, 2020-21, 2021-22, 2022-23
 
-# Packages ####
+# packages ####
 library(hoopR)     # NBA Play by Play Data
 library(tidyverse) # Load the 'Tidyverse'
 library(janitor)   # Examining and Cleaning Data
@@ -25,13 +25,13 @@ nest_fun <- function(df, team_ID, season, year) {
     group_by({{ team_ID }}, {{ season }}, {{ year }}) %>%
     nest() %>%
     ungroup() %>%
-    mutate(
-      season_type =
-        ifelse(season_type == 2, "Regular", "Playoffs")
-      )
+    mutate(season_type = ifelse(season_type == 2, "Regular", "Playoffs"))
 }
 
-data_frames <- list(box_18, box_19, box_20, box_21, box_22)
+data_frames <- list(
+ box_18, box_19, box_20, box_21, box_22
+ )
+
 
 nested_data_frames <- lapply(data_frames,
   nest_fun,
@@ -41,10 +41,10 @@ nested_data_frames <- lapply(data_frames,
 )
 
 
-# Combine the nested data frames into a single data frame
+# bind nested data frames
 years <- bind_rows(nested_data_frames)
-class(years)
 
+# clear 
 rm(
   box_18, box_19, box_20, box_21, box_22,
   nest_fun, nested_data_frames, data_frames
