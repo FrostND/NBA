@@ -1,96 +1,41 @@
 
-
-# Organize team box scores into a single data frame. 
+# NBA Box Scores Data ####
 # Seasons: 2018-19, 2019-20, 2020-21, 2021-22, 2022-23
 
 # packages ####
-library(hoopR)     # NBA Play by Play Data
-library(tidyverse) # Load the 'Tidyverse'
-library(janitor)   # Examining and Cleaning Data
-library(todor)     # Comments and More
+library(psych)      # Descriptive statistics
+library(hoopR)      # NBA Play by Play Data
+library(janitor)    # Examining and Cleaning Data
+library(tidyverse)  # Load the 'Tidyverse'
 
-
-# NBA seasons ####    
-box_18 <- load_nba_team_box(2018)
-box_19 <- load_nba_team_box(2019)
-box_20 <- load_nba_team_box(2020)
-box_21 <- load_nba_team_box(2021)  
-box_22 <- load_nba_team_box(2022)
-box_23 <- load_nba_team_box(2023)
-
-
-# seasons in single object to apply functions across them at once
-nest_fun <- function(df, team_ID, season, year) {
-  df %>%
-    group_by({{ team_ID }}, {{ season }}, {{ year }}) %>%
-    nest() %>%
-    ungroup() %>%
-    mutate(season_type = ifelse(season_type == 2, "Regular", "Playoffs"))
-}
-
-data_frames <- list(
- box_18, box_19, box_20, box_21, box_22
- )
-
-
-nested_data_frames <- lapply(data_frames,
-  nest_fun,
-  team_ID = team_name,
-  season = season_type,
-  year = season
+# load box scores ####
+box <- list(
+  team_box = load_nba_team_box(2018:2023),
+  player_box = load_nba_player_box(2018:2023)
 )
 
+# organize data ####
+map(box, .f = names)
+with(box, setdiff(team_box, player_box))
+    
+# remove non-season games (e.g., all-star games)
+tabyl(box$team_box$team_name)
 
-# bind nested data frames
-years <- bind_rows(nested_data_frames)
-
-# clear 
-rm(
-  box_18, box_19, box_20, box_21, box_22, box_23,
-  nest_fun, nested_data_frames, data_frames
-)
-
-
-#........................................
-# TODO: remove all-star games, and others
-#........................................
-
-# which ones are the all-star games?
-tabyl(years$team_name)
-
-rm_team <- c(
-  "Team LeBron",
-  "Team Giannis",
-  "Team Stephen",
-  "Team Durant",
-  "USA",
-  "World"
-)
-
-years <- years %>%
-  filter(!team_name %in% rm_team) %>%
-  rename(year = season)
-
-# check that the all-star games are gone
-tabyl(years$team_name)
-
-nba <- years 
-rm(rm_team, years)
-
-
-# variables in each nested column
-names(nba$data[[1]])
-
-# remove variables from from nested columns
-team_box <- nba %>%
-  mutate(
-    data = map(data, select, -c(
-      team_color, team_logo, opponent_team_location, 
-      opponent_team_color, opponent_team_logo, 
-      opponent_team_alternate_color, team_alternate_color, 
-      opponent_team_uid, team_uid
-    ))
+rm_teams <- c(
+  "Team LeBron", "Team Giannis", "World",
+  "Team Stephen", "Team Durant", "USA"
   )
+
+box <- map(box, ~filter(.x, !team_name %in% rm_teams))
+tabyl(box$team_box$team_name)
+
+# clear memory
+rm(rm_teams)
+
+
+
+
+
 
 
 
