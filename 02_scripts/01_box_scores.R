@@ -3,7 +3,7 @@
 # Seasons: 2018-19, 2019-20, 2020-21, 2021-22, 2022-23
 
 
-# packages ####
+# load packages ####
 library(psych)                # Descriptive statistics
 library(hoopR)                # NBA Play by Play Data
 library(janitor)              # Examining and Cleaning Data
@@ -12,7 +12,7 @@ library(fivethirtyeight)      # Data Behind FiveThirtyEight
 library(fivethirtyeightdata)  # Package For FiveThirtyEight datasets
 
 
-# load box scores ####
+# get box scores ####
 box <- list(
   team_box = load_nba_team_box(2018:2023),
   player_box = load_nba_player_box(2018:2023)
@@ -36,7 +36,7 @@ tabyl(box$team_box$team_name)
 # clear
 rm(rm_teams)
 
-# Raptor data ####
+# get Raptor & Elo ####
 
 raptor <- list(
   raptor_by_player = raptor_by_player,
