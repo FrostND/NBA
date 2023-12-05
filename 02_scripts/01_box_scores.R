@@ -1,6 +1,7 @@
 
-# NBA Box Scores Data ####
+# NBA Box Scores and Perfomance Metrics  
 # Seasons: 2018-19, 2019-20, 2020-21, 2021-22, 2022-23
+
 
 # packages ####
 library(psych)                # Descriptive statistics
