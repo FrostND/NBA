@@ -29,16 +29,7 @@ rm_teams <- c(
 box <- map(box, ~filter(.x, !team_name %in% rm_teams))
 tabyl(box$team_box$team_name)
 
-# clear memory
+# clear
 rm(rm_teams)
-
-
-
-
-
-
-
-
-
 
 
